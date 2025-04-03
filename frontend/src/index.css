@@ -1,1 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Underdog&display=swap');
 @import "tailwindcss";
+@plugin "daisyui";
+
+@theme{
+  --font-nunito: "Underdog", "system-ui";
+}

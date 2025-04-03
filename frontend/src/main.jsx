@@ -5,6 +5,7 @@ import './index.css'
 import App from './App.jsx'
 import Hero from './components/core/Home/Hero.jsx'
 import UserFrom from './components/core/Form/UserFrom.jsx'
+import { AboutUs } from './components/common/About.jsx'
 
 const router = createBrowserRouter([
   {
@@ -12,7 +13,8 @@ const router = createBrowserRouter([
     element:<App/>,
     children:[
       {path:'/',element:<Hero/>},
-      {path:'/check-health',element:<UserFrom/>}
+      {path:'/check-health',element:<UserFrom/>},
+      {path:'/about',element:<AboutUs/>}
     ]
   }
 ])
