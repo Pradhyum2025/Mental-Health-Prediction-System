@@ -22,7 +22,7 @@ export default function Hero() {
         
           <button 
           onClick={()=>Navigate('/check-health')}
-          className='px-8 py-4 bg-indigo-600 text-white rounded-full text-lg font-semibold shadow-lg hover:bg-blue-700 transform hover:scale-105 transition-all duration-300 cursor-pointer'>Check your mental health</button>
+          className='scale px-8 py-4 bg-indigo-600 text-white rounded-full text-lg font-semibold shadow-lg hover:bg-blue-700 transform hover:scale-105 transition-all duration-300 cursor-pointer'>Check your mental health</button>
         </div>
       </div>
       <MentalHealthHero/>

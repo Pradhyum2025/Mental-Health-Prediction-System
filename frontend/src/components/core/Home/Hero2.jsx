@@ -93,10 +93,7 @@ export const MentalHealthHero = () => {
           <img
             src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b"
             alt="Peaceful nature scene"
-            className="w-32 h-32 rounded-full object-cover shadow-lg"
-            onError={(e) => {
-              e.target.src = "https://images.unsplash.com/photo-1518495973542-4542c06a5843";
-            }}
+            className="w-20 h-20 rounded-full object-cover shadow-lg"
             loading="lazy"
           />
         </div>
