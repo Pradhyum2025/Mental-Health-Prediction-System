@@ -3,7 +3,7 @@ import { FaBrain, FaLock, FaChartLine } from "react-icons/fa";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 
-export const MentalHealthHero = () => {
+export const SubHero2 = () => {
   const [isLoaded, setIsLoaded] = useState(false);
   const Navigate = useNavigate();
   useEffect(() => {

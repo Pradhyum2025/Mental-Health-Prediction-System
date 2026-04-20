@@ -37,8 +37,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 
 //all routers
-app.use('/auth',authRoutes);
-app.use('/prediction',predictionRoutes);
+app.use('/api/v1/auth',authRoutes);
+app.use('/api/v1/prediction',predictionRoutes);
 
 
 //Def route

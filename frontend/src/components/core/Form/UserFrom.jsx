@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form';
 import { FaTransgenderAlt } from "react-icons/fa";
 import { RiMentalHealthLine } from "react-icons/ri";
@@ -9,25 +9,42 @@ import { GiHabitatDome } from "react-icons/gi";
 import { GiNightSleep } from "react-icons/gi";
 import { GiSuicide } from "react-icons/gi";
 import { MdSchool } from "react-icons/md";
-import { useNavigate } from 'react-router-dom';
-import { getMentalPrediction } from '../../../operations/prediction';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { getMentalPrediction, updateMentalPrediction } from '../../../operations/prediction';
 import Result from './Result';
+import { useDispatch } from 'react-redux';
+
 
 export default function UserFrom() {
   const [fetching,setFetching] = useState(false);
   const [result,setResult] = useState({});
+  const dispatch = useDispatch();
+  const currPred = useLocation().state?.currPred;
 
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors }
   } = useForm();
+ 
+  useEffect(()=>{
+   if(currPred){
+    reset(currPred)
+   }
+  },[])
 
   const onSubmit = async (data) => {
-    return await getMentalPrediction(data,setResult,setFetching)
+    if(currPred){
+      return await updateMentalPrediction(dispatch,currPred._id,data,setResult)
+    }else{
+      return await getMentalPrediction(dispatch,data,setResult)
+
+    }
   }
+
   return (
-    <div className="w-full min-h-screen bg-gray-50 py-4 px-4 sm:px-6 lg:px-8">
+    <div className="w-full min-h-screen bg-gradient-to-br from-blue-50 via-green-50 to-neutral-50 py-4 px-4 sm:px-6 lg:px-8 mt-[-10px]">
       <div className="max-w-4xl mx-auto">
         <div className="bg-white shadow-md rounded-lg ">
           <h2 className="text-2xl p-5 rounded rounded-bl-none rounded-br-none font-semibold text-indigo-400 bg-gray-300 text-center mb-6 ">Predict your mental health with us</h2>
@@ -213,7 +230,7 @@ export default function UserFrom() {
               >
                 <option className='text-gray-300' value={""}>Select degree type</option>
                 <option className='font-semibold text-md'  value={1}>Undergraduate</option>
-                <option className='font-semibold text-md'  value={1}>Postgraduate</option>
+                <option className='font-semibold text-md'  value={2}>Postgraduate</option>
                 <option  className='font-semibold text-md' value={3}>Other</option>
               </select>
               {/* -------Error handling ------- */}

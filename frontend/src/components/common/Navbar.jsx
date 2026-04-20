@@ -1,9 +1,23 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+
+import React, { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { signOut } from '../../operations/auth';
 
 export default function Navbar() {
+  const loggedInUser = useSelector(store=>store.auth);
+  const navigate = useNavigate();
+  const dispatch = useDispatch()
+  const currPath = useLocation().pathname;
+  const [drop,setDrop] = useState(false)
+  const handleLogin = ()=>{
+    if(currPath==='/signup'){
+      navigate('/')
+    }
+    return document.getElementById('my_modal_3').showModal();
+  }
   return (
-    <nav class="topTo block w-full sticky top-0  px-4 py-2 mx-auto bg-gray-800 shadow-lg lg:px-8 lg:py-3 text-white z-50">
+    <nav class="topTo block w-full sticky top-0  px-4  mx-auto bg-gray-800 shadow-lg lg:px-8 lg:py-3 text-white z-50 mt-2">
   <div class="container flex flex-wrap items-center justify-between mx-auto  ">
     <Link href="/" class="mr-4 block cursor-pointer py-1.5 text-lg text-indigo-500 font-bold">
       Mental Health Predection
@@ -12,15 +26,51 @@ export default function Navbar() {
     <div class="hidden lg:block">
       <ul class="flex flex-col gap-2 mt-2 mb-4 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
 
-        <li class="flex items-center p-1 text-sm gap-x-2 text-slate-600">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-6 w-6 text-slate-200">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
-          </svg>
- 
-          <Link href="/" class="flex items-center text-white font-semibold">
-            Account
-          </Link>
+      { (loggedInUser && loggedInUser.email)?
+        <li
+        onMouseEnter={()=>setDrop(true)}
+        onMouseLeave={()=>setDrop(false)}
+         class="flex items-center justify-center p-1 text-sm gap-x-2 text-slate-600 relative ">
+          
+         <img src={loggedInUser.image} alt="loggedInUser Image" className='rounded-full w-[2.6rem] h-[2.6rem] cursor-pointer' 
+        
+          />
+         {drop &&
+         <div
+         onClick={()=>navigate('/profile')}
+          className='absolute top-12 bg-white text-md font-bold  py-3 flex flex-col gap-2 rounded'>
+          <p className='hover:bg-gray-300 cursor-pointer px-7 py-[5px]'>Profile</p>
+          <p
+          onClick={()=>signOut(dispatch,navigate)}
+           className='hover:bg-gray-300 cursor-pointer px-7 py-[5px]'>logout</p>
+          </div>  
+         }
+
         </li>
+        :
+        <>
+        {currPath==='/signup'?
+        <button
+        onClick={handleLogin}
+         className='py-3 px-6 text-sm font-semibold rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none border-none cursor-pointer'>
+          Login
+        </button>
+        :
+        <>
+        <button 
+        onClick={handleLogin}
+        className='py-3 px-6 text-sm font-semibold rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none border-none cursor-pointer'>
+          Login
+          </button>
+          <button
+          onClick={()=>navigate('/signup')}
+           className='py-3 px-6 text-sm font-semibold rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none border-none cursor-pointer'>
+          Signup
+          </button>
+        </>
+          }
+        </>
+           }
 
         <li class="flex items-center p-1 text-sm gap-x-2 text-slate-600">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-6 w-6 text-slate-200">
